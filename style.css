@@ -177,7 +177,7 @@ body {
         background-color: transparent;
         transition: rotate .7s ease-in-out;
         border-radius: 50%;
-        &:not([aria-label="autostart"]):hover{
+        &:not([aria-label="auto start timer"]):hover{
             rotate: 60deg;
         }
         &:focus-visible{    
