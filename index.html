@@ -12,79 +12,79 @@
 <body>
     <h1>pomodoro</h1>
     <div class="timer-selector">
-        <button data-type="pomodoro" data-value="25" data-selected="true" onclick="toggleOption('pomodoro')" class="timer-option">pomodoro</button>
-        <button data-type="short-break" data-value="5" data-selected="false" onclick="toggleOption('short break')" class="timer-option">short break</button>
-        <button data-type="long-break" data-value="15" data-selected="false" onclick="toggleOption('long break')" class="timer-option">long break</button>
+        <button aria-label="pomodoro option" data-type="pomodoro" data-value="25" data-selected="true" onclick="toggleOption('pomodoro')" class="timer-option">pomodoro</button>
+        <button aria-label="short break option" data-type="short-break" data-value="5" data-selected="false" onclick="toggleOption('short break')" class="timer-option">short break</button>
+        <button aria-label="long break option" data-type="long-break" data-value="15" data-selected="false" onclick="toggleOption('long break')" class="timer-option">long break</button>
     </div>
     <div class="dial">
         <div class="content">
             <span class="timer-value">
                 17:59
             </span>
-            <button class="pause" data-pause="false" onclick="pauseTimer()">START</button>
+            <button aria-label="start or pause timer" class="pause" data-pause="false" onclick="pauseTimer()">START</button>
         </div>
     </div>
     <div>
-        <button onclick="toggleSettings('on')" class="settings">&#9967;</button>
-        <button aria-label="autostart" onclick="AutoStart()" class="settings">&#129302;</button>
-        <button onclick="ResetTimer()" class="settings">&#10227;</button>
+        <button  aria-label="open settings" onclick="toggleSettings('on')" class="settings">&#9967;</button>
+        <button  aria-label="auto start timer" onclick="AutoStart()" class="settings">&#129302;</button>
+        <button  aria-label="restart timer" onclick="ResetTimer()" class="settings">&#10227;</button>
     </div>
     <dialog id="settings" >
         <div class="model" data-view="false">
             <div class="top" style="width: 100%;">
                 <h1>Settings</h1>
-                <button onclick="toggleSettings('off')">&#10006;</button>
+                <button aria-label="close settings" onclick="toggleSettings('off')">&#10006;</button>
             </div>
             <p class="info">TIME (MINUTES)</p>
             <div class="input-collection" style="width: 80%;">
-                <label for="pomodoro">
+                <label aria-label="fill minutes for pomodoro work timer" for="pomodoro">
                     pomodoro
                     <input type="number" id="pomodoro">
                 </label>
-                <label for="short-break">
+                <label aria-label="fill minutes for short break" for="short-break">
                     short break
                     <input type="number" id="short-break">
                 </label>
-                <label for="long-break">
+                <label aria-label="fill minutes for long break" for="long-break">
                     long break
                     <input type="number" id="long-break">
                 </label>
             </div>
             <div class="top" style="width: 80%;">
-                <p class="info">FONT</p>
+                <p aria-label="select font family" class="info">FONT</p>
                 <div class="selector">
-                    <label style="font-family: sans-serif;" for="sans-serif">
+                    <label aria-label="sans-serif" style="font-family: sans-serif;" for="sans-serif">
                         Aa
                         <input type="radio" name="font" value="sans-serif" id="sans-serif">
                     </label>
-                    <label style="font-family: serif;" for="serif">
+                    <label aria-label="serif" style="font-family: serif;" for="serif">
                         Aa
                         <input type="radio" name="font" value="serif" id="serif">
                     </label>
-                    <label style="font-family: monospace;" for="monospace">
+                    <label aria-label="monospace" style="font-family: monospace;" for="monospace">
                         Aa
                         <input type="radio" name="font" value="monospace" id="monospace">
                     </label>
                 </div>
             </div>
             <div class="top" style="width: 80%;">
-                <p class="info">COLOR</p>
+                <p aria-label="select color" class="info">COLOR</p>
                 <div class="selector">
-                    <label style="background-color: var(--primary-color);" for="primary">
+                    <label aria-label="tomato color" style="background-color: var(--primary-color);" for="primary">
                         &#10004;
                         <input type="radio" name="color" id="primary" value="primary">
                     </label>
-                    <label style="background-color: var(--secondary-color);" for="secondary">
+                    <label aria-label="aqua color" style="background-color: var(--secondary-color);" for="secondary">
                         &#10004;
                         <input type="radio" name="color" id="secondary" value="secondary">
                     </label>
-                    <label style="background-color: var(--tertiary-color);" for="tertiary">
+                    <label aria-label="pink color" style="background-color: var(--tertiary-color);" for="tertiary">
                         &#10004;
                         <input type="radio" name="color" id="tertiary" value="tertiary">
                     </label>
                 </div>
             </div>
-            <button class="modalSubmit" onclick="toggleTheme()">Apply</button>
+            <button aria-label="apply theme changes button" class="modalSubmit" onclick="toggleTheme()">Apply</button>
         </div>
     </dialog>
     <script src="script.js"></script>
