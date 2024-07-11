@@ -13,8 +13,9 @@ const toggleOption = (params) => {
             item.setAttribute("data-selected", "true")
             timerDisplay.innerHTML = `${fixString(item.dataset.value)}:00`
             intialPageLoad()
+            clearTimeout(autoTimeOut)
             pauseBtn.dataset.pause = "true"
-            if (timerValue != item.dataset.value) { storeState('DEL') }
+            if (timerValue != item.dataset.value) { storeState('DEL'); clearTimeout(autoTimeOut) }
             pauseTimer()
             timerOptions.style.setProperty('--active-pos', `translateX(${index}00%)`)
         }
@@ -95,7 +96,7 @@ const toggleTheme = () => {
     })
     document.body.style.setProperty('--color-type', `var(--${theme.colorType || 'primary'}-color)`)
     document.body.style.setProperty('--font-type', theme.fontType || 'sans-serif')
-    intialPageLoad(true)
+    ResetTimer()
     toggleSettings('off')
 }
 
@@ -108,8 +109,6 @@ const intialPageLoad = (params) => {
             }
         }) : null
     document.querySelector('.input-collection').querySelectorAll('input').forEach(item => item.value = null)
-    console.log(getComputedStyle(document.body).getPropertyValue('--color-type'));
-    console.log(getComputedStyle(document.body).getPropertyValue('--font-type'));
     document.querySelector('.dial').style.setProperty('--angle', '360deg')
 }
 
@@ -127,33 +126,57 @@ function storeState(method) {
 //Reset button
 const ResetTimer = () => {
     storeState('DEL')
+    count = 0
+    clearTimeout(autoTimeOut)
     pauseBtn.dataset.pause = "true"
     pauseTimer()
     intialPageLoad(true)
+    document.querySelectorAll('button').forEach(item => {
+        item.removeAttribute('disabled')
+    })
+
 }
 
 intialPageLoad(true)
 
 //Auto run function
 let count = 0
+let autoTimeOut = null
 const AutoStart = () => {
+    if (count == 0) {
+        storeState('DEL')
+        if (timerInterval) {
+            clearInterval(timerInterval)
+            timerOptions.querySelector('[data-type="pomodoro"]').click()
+        }
+    }
+    document.querySelectorAll('button').forEach(item => {
+        if (item.getAttribute('aria-label') != "restart timer") {
+            item.setAttribute('disabled', true)
+        }
+    })
     pauseTimer()
-    setTimeout(() => {
+    autoTimeOut = setTimeout(() => {
         count++
         if (count > 5) {
-            clearInterval(timerInterval)
+            ResetTimer()
             timerOptions.querySelector('[data-type="pomodoro"]').click()
             return
         } else if (count == 5) {
+            timerOptions.querySelector('[data-type="long-break"]').removeAttribute('disabled')
             timerOptions.querySelector('[data-type="long-break"]').click()
             clearInterval(timerInterval)
             AutoStart()
         } else if (count < 5) {
-            count % 2 != 0
-            ? timerOptions.querySelector('[data-type="short-break"]').click()
-            : timerOptions.querySelector('[data-type="pomodoro"]').click()
+            if (count % 2 != 0) {
+                timerOptions.querySelector('[data-type="short-break"]').removeAttribute('disabled')
+                timerOptions.querySelector('[data-type="short-break"]').click()
+            } else {
+                timerOptions.querySelector('[data-type="pomodoro"]').removeAttribute('disabled')
+                timerOptions.querySelector('[data-type="pomodoro"]').click()
+            }
             clearInterval(timerInterval)
             AutoStart()
-        } 
+        }
     }, parseInt(timerOptions.querySelector('[data-selected="true"]').dataset.value) * 60000)
 }
